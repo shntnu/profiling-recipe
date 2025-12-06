@@ -105,7 +105,9 @@ class RunPipeline(object):
         aggregate_output_file = pathlib.PurePath(output_dir, f"{plate}.csv.gz")
         annotate_output_file = pathlib.PurePath(output_dir, f"{plate}_augmented.csv.gz")
 
-        metadata_dir = pathlib.PurePath(".", "metadata", "platemaps", batch)
+        # Allow config to override default metadata directory
+        metadata_base = self.pipeline.get("metadata_dir", "metadata/platemaps")
+        metadata_dir = pathlib.PurePath(".", metadata_base, batch)
         barcode_plate_map_file = pathlib.PurePath(metadata_dir, "barcode_platemap.csv")
         barcode_plate_map_df = pd.read_csv(
             barcode_plate_map_file, dtype={"Assay_Plate_Barcode": str}
