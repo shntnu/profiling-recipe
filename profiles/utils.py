@@ -50,12 +50,7 @@ def process_pipeline(pipeline, option):
 def create_directories(batch, plate, pipeline):
     pipeline_output = pipeline["output_dir"]
     output_dir = pathlib.PurePath(".", pipeline_output, batch, plate)
-
-    if not os.path.isdir(pathlib.PurePath(".", pipeline_output, batch)):
-        os.mkdir(pathlib.PurePath(".", pipeline_output, batch))
-
-    if not os.path.isdir(output_dir):
-        os.mkdir(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
 
 
 def create_gct_directories(batch):
